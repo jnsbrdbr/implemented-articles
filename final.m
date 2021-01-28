@@ -3,13 +3,14 @@ clear;
 close all;
 
 % some samples:
-% 'office_3.jpg'
+% 'office_4.jpg'
 % 'greens.jpg'
 % 'hands1.jpg'
+% 'C:\Users\jinu\Dropbox\My PC (DESKTOP-4UNBIL6)\Desktop\6.tiff'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-mypic = imread('office_3.jpg');
+mypic = imread('office_4.jpg');
 subplot(4,2,2);
 image(mypic);
 title 'low contras picture';
@@ -98,3 +99,62 @@ myfinalpic = ycbcr2rgb(wq);
 subplot(4,2,8) 
  imshow(myfinalpic);
 title ('final image','fontsize',8);
+
+figure
+HSV = rgb2hsv(mypic);
+Heq = histeq(HSV(:,:,3));
+HSV_mod = HSV;
+HSV_mod(:,:,3) = Heq;
+RGB = hsv2rgb(HSV_mod);
+
+subplot(2,2,1)
+imshow(mypic);
+title ('original image','fontsize',8);
+
+subplot(2,2,2)
+imshow(RGB);
+title ('HE','fontsize',8);
+
+subplot(2,2,3)
+imshow(myfinalpic);
+title ('myfinalpic','fontsize',8);
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%psnr
+%%%%%%%%%%%%%%%%%%%%%%%
+
+peaksnr1 = psnr(mypic,myfinalpic);
+peaksnr2 = psnr(mypic,uint8(RGB));
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%ssim
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+ssimval1 = ssim(mypic,myfinalpic);
+ssimval2 = ssim(mypic,uint8(RGB));
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%ambe
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+B = rgb2gray(mypic);
+B2 = rgb2gray(myfinalpic);
+B3 = rgb2gray(uint8(RGB));
+Z1 = mean2(B); 
+Z2 = mean2(B2); 
+Z3 = mean2(B3);
+AMBE1 = Z1-Z2; % calculate AMBE1
+AMBE2 = Z1-Z3; % calculate AMBE2
+
+
+
+
+
+
+
+
