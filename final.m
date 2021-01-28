@@ -150,3 +150,8 @@ Z2 = mean2(B2);
 Z3 = mean2(B3);
 AMBE1 = Z1-Z2; % calculate AMBE1
 AMBE2 = Z1-Z3; % calculate AMBE2
+
+
+%%%%%%%%%%%
+%%%end
+%%%%%%%%%%%
